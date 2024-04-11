@@ -1,9 +1,15 @@
 ORG 0
 BITS 16
 
-jmp 0x7c0:start
+_start:
+	jmp short start
+	nop
+	times 33 db 0
 
 start :
+	jmp 0x7c0:step2
+
+step2 :
 	cli ; clear Interrupts
 	mov ax, 0x7c0
 	mov ds, ax
@@ -33,6 +39,6 @@ print_char :
 	int 0x10
 	ret
 
-message: db '/Manuel/Westermeier/OS/', 0
+message: db '/Manuel/Westermeier/OS/V1.0/', 0
 times 510-($ - $$) db 0
 dw 0xAA55
