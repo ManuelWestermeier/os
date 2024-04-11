@@ -8,7 +8,6 @@ _start:
 
 start :
 	jmp 0x7c0:step2
-
 step2 :
 	cli ; clear Interrupts
 	mov ax, 0x7c0
@@ -17,8 +16,8 @@ step2 :
 	mov ax, 0x00
 	mov ss, ax
 	mov sp, 0x7c00
-	
 	sti ; enable Interrupts
+	; print hello world
 	mov si, message
 	call print
 	jmp $
