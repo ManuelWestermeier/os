@@ -48,7 +48,7 @@ screen :
     pop es
     xor di,di
     xor ax,ax  ; color
-    mov cx,8   ; big rows (each having 32 5x5 squares)
+    mov cx,1   ; big rows (each having 32 5x5 squares)
 bigRowLoop:
     mov bx, 512 ; pixel height of single row
 rowLoop:
