@@ -47,6 +47,9 @@ screen :
 
     int 10h
 
+    call drawPixel
+
+drawPixel: 
     ;write pixels on screen
     mov ah, 0ch
     mov bh, 0
