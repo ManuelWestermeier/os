@@ -41,18 +41,18 @@ init :
 	jmp $
 
 screen :
-    mov ax,10h
+    mov ax, 10h
     int 10h
     ; draw palette in 32x8 squares, each square 5x5 pixels big (so 160x40px)
     push 0a000h
     pop es
-    xor di,di
-    xor ax,ax  ; color
-    mov cx,1   ; big rows (each having 32 5x5 squares)
+    xor di, di
+    xor ax, ax  ; color
+    mov cx, 1   ; big rows (each having 32 5x5 squares)
 bigRowLoop:
-    mov bx, 512 ; pixel height of single row
+    mov bx, 800 ; pixel height of single row
 rowLoop:
-    mov dx, 1024 ; squares per row
+    mov dx, 1200 ; squares per row
     push ax
     push di
 squareLoop:
@@ -61,7 +61,7 @@ squareLoop:
     mov [es:di+2],ax
     mov [es:di+4],al
     add ax,0101h
-    add di,100
+    add di,1
     dec dx
     jnz squareLoop
     pop di
@@ -70,7 +70,7 @@ squareLoop:
     dec bx     ; do next single pixel line
     jnz rowLoop
     ; one row of color squares is drawn, now next 32 colors
-    add ax,02020h ; color += 32
+    add ax,0x223388 ; color += 32
     dec cx
     jnz bigRowLoop
     ; wait for any key and exit
