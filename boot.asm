@@ -47,18 +47,23 @@ screen :
     int 10h
     mov ax, 120
     ; draw pixels
-    jmp .loop1
-.loop1
     ; color
     mov al, 101010b
     ; dx = pos.y ; cx = pos.x
     mov dx, 20
     mov cx, 30
+    jmp .loop1
+
+.loop1
+
+    mov dx, ax
     call drawPixel
 
-    add ax, 1
+    dec ax
     cmp ax, 0
     je .loop1
+
+    jmp $
 
 drawPixel: 
     ;write pixels on screen
