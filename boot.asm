@@ -50,7 +50,7 @@ screen :
     xor ax,ax  ; color
     mov cx,8   ; big rows (each having 32 5x5 squares)
 bigRowLoop:
-    mov bx,10 ; pixel height of single row
+    mov bx,100 ; pixel height of single row
 rowLoop:
     mov dx,32 ; squares per row
     push ax
