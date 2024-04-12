@@ -52,7 +52,7 @@ screen :
     mov dx, 20
     mov cx, 30
 
-    mov ax, 120
+    mov ax, 5
 
     jmp .loop1
 
@@ -61,8 +61,8 @@ screen :
     mov dx, ax
     call drawPixel
 
-    dec ax
-    cmp ax, 0
+    inc ax
+    cmp ax, 120
     je .loop1
 
     jmp $
