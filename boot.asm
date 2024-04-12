@@ -47,7 +47,7 @@ screen :
     int 10h
     ; draw pixels
     ; color
-    mov al, 011b
+    mov al, 101010b
     call drawPixel
 
 drawPixel: 
