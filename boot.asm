@@ -45,13 +45,15 @@ screen :
     mov ah, 00h
     mov al, 13h
     int 10h
-    mov ax, 120
     ; draw pixels
     ; color
     mov al, 101010b
     ; dx = pos.y ; cx = pos.x
     mov dx, 20
     mov cx, 30
+
+    mov ax, 120
+
     jmp .loop1
 
 .loop1
