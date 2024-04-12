@@ -46,6 +46,8 @@ screen :
     mov al, 13h
 
     int 10h
+    
+    mov al, 0x999966
 
     call drawPixel
 
@@ -55,7 +57,6 @@ drawPixel:
     mov bh, 0
     mov dx, 5
     mov cx, 5
-    mov al, 0100b
 
     int 10h
 message: db '/Manuel/Westermeier/OS/V1.0/', 0
