@@ -33,16 +33,13 @@ print_char :
 	mov ah, 0eh
 	int 0x10
 	ret
-message: db '/Manuel/Westermeier/OS/V1.0/', 0
-times 510-($ - $$) db 0
-dw 0xAA55
-
 ; print hello world
 init :
 	mov si, message
 	call print
 	jmp screen
 	jmp $
+
 screen :
     mov ax,13h
     int 10h
@@ -80,3 +77,6 @@ squareLoop:
     xor ah,ah
     int 16h
     ret
+message: db '/Manuel/Westermeier/OS/V1.0/', 0
+times 510-($ - $$) db 0
+dw 0xAA55
