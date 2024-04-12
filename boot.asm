@@ -44,11 +44,10 @@ screen :
     ;set video mode
     mov ah, 00h
     mov al, 13h
-
     int 10h
-    
-    mov al, 0x999966
-
+    ; draw pixels
+    ; color
+    mov al, 011b
     call drawPixel
 
 drawPixel: 
@@ -57,7 +56,6 @@ drawPixel:
     mov bh, 0
     mov dx, 5
     mov cx, 5
-
     int 10h
 message: db '/Manuel/Westermeier/OS/V1.0/', 0
 times 510-($ - $$) db 0
