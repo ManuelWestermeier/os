@@ -48,14 +48,15 @@ screen :
     ; draw pixels
     ; color
     mov al, 101010b
+    ; dx = pos.y ; cx = pos.x
+    mov dx, 20
+    mov cx, 30
     call drawPixel
 
 drawPixel: 
     ;write pixels on screen
     mov ah, 0ch
     mov bh, 0
-    mov dx, 5
-    mov cx, 5
     int 10h
 message: db '/Manuel/Westermeier/OS/V1.0/', 0
 times 510-($ - $$) db 0
