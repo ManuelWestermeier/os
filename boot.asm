@@ -41,42 +41,20 @@ init :
 	jmp $
 
 screen :
-    mov ax, 10h
+    ;set video mode
+    mov ah, 00h
+    mov al, 13h
+
     int 10h
-    ; draw palette in 32x8 squares, each square 5x5 pixels big (so 160x40px)
-    push 0a000h
-    pop es
-    xor di, di
-    xor ax, ax  ; color
-    mov cx, 1   ; big rows (each having 32 5x5 squares)
-bigRowLoop:
-    mov bx, 800 ; pixel height of single row
-rowLoop:
-    mov dx, 1200 ; squares per row
-    push ax
-    push di
-squareLoop:
-    ; draw 10 pixels with "ah:al" color, ++color, di += 5
-    mov [es:di],ax
-    mov [es:di+2],ax
-    mov [es:di+4],al
-    add ax,0101h
-    add di,1
-    dec dx
-    jnz squareLoop
-    pop di
-    pop ax     ; restore color for first square
-    add di,320 ; move di to start of next line
-    dec bx     ; do next single pixel line
-    jnz rowLoop
-    ; one row of color squares is drawn, now next 32 colors
-    add ax,0x223388 ; color += 32
-    dec cx
-    jnz bigRowLoop
-    ; wait for any key and exit
-    xor ah,ah
-    int 16h
-    ret
+
+    ;write pixels on screen
+    mov ah, 0ch
+    mov bh, 0
+    mov dx, 5
+    mov cx, 5
+    mov al, 0100b
+
+    int 10h
 message: db '/Manuel/Westermeier/OS/V1.0/', 0
 times 510-($ - $$) db 0
 dw 0xAA55
