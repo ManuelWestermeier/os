@@ -82,6 +82,8 @@ wait_release:
 
     jmp main_loop  ; Continue the main loop
 
+    jmp $
+
     ; Restore text mode and terminate program
     ; mov ax, 0x0003 ; Set text mode (80x25)
     ; int 0x10       ; BIOS video services
