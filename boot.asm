@@ -18,12 +18,6 @@ step2 :
 	mov sp, 0x7c00
 	sti ; enable Interrupts
     
-	 ; Initialize mouse
-    mov ax, 0      ; Reset mouse
-    int 0x33
-    mov ax, 0x0C00 ; Enable mouse
-    int 0x33
-
 	jmp init
 
 print :
@@ -49,6 +43,12 @@ init :
 	jmp $
 
 screen :
+    ; Initialize mouse
+    mov ax, 0      ; Reset mouse
+    int 0x33
+    mov ax, 0x0C00 ; Enable mouse
+    int 0x33
+
     ; Initialize graphics mode
     mov ax, 0x0013 ; Set VGA 320x200 256-color mode
     int 0x10
