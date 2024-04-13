@@ -50,7 +50,7 @@ screen :
     mov al, 101010b
     ; dx = pos.y ; cx = pos.x
 
-    mov cx, 100    ; Initialize loop counter to 100
+    mov cx, 200    ; Initialize loop counter to 100
 
     jmp .loop1
 
@@ -61,8 +61,9 @@ screen :
 
     call drawPixel
 
-    dec cx         ; Decrement loop counter
-    jnz loop_start ; Jump to loop_start if counter is not zero
+    dec cx     ; Decrement loop counter
+    cmp cx, 0
+    je .loop1 ; Jump to loop_start if counter is not zero
 
     jmp $
 
