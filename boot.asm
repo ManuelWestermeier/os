@@ -49,22 +49,20 @@ screen :
     ; color
     mov al, 101010b
     ; dx = pos.y ; cx = pos.x
-    mov dx, 20
-    mov cx, 30
 
-    mov ax, 5
+    mov cx, 100    ; Initialize loop counter to 100
 
     jmp .loop1
 
 .loop1
 
-    mov dx, ax
+    mov dx, 20
+    ; mov cx, 30
+
     call drawPixel
 
-    inc ax
-    
-    cmp ax, 120
-    jne .loop1
+    dec cx         ; Decrement loop counter
+    jnz loop_start ; Jump to loop_start if counter is not zero
 
     jmp $
 
