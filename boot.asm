@@ -58,10 +58,21 @@ screen :
 
     mov dx, 20
     ; mov cx, 30
-
+    call drawPixel
+    mov dx, 21
+    ; mov cx, 30
+    call drawPixel
+    mov dx, 23
+    ; mov cx, 30
+    call drawPixel
+    mov dx, 24
+    ; mov cx, 30
+    call drawPixel
+    mov dx, 25
+    ; mov cx, 30
     call drawPixel
 
-    dec cx     ; Decrement loop counter
+    dec cx    ; Decrement loop counter
     cmp cx, 0
     je .loop1 ; Jump to loop_start if counter is not zero
 
