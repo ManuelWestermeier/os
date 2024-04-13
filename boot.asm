@@ -83,10 +83,10 @@ wait_release:
     jmp main_loop  ; Continue the main loop
 
     ; Restore text mode and terminate program
-    mov ax, 0x0003 ; Set text mode (80x25)
-    int 0x10       ; BIOS video services
-    mov ax, 0x4C00 ; Terminate program
-    int 0x21       ; DOS interrupt
+    ; mov ax, 0x0003 ; Set text mode (80x25)
+    ; int 0x10       ; BIOS video services
+    ; mov ax, 0x4C00 ; Terminate program
+    ; int 0x21       ; DOS interrupt
 message: db '/Manuel/Westermeier/OS/V1.0/', 0
 times 510-($ - $$) db 0
 dw 0xAA55
