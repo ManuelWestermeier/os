@@ -62,8 +62,9 @@ screen :
     call drawPixel
 
     inc ax
+    
     cmp ax, 120
-    je .loop1
+    jne .loop1
 
     jmp $
 
