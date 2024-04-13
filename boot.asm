@@ -8,6 +8,7 @@ _start:
 start :
 	jmp 0x7c0:step2
 step2 :
+	
 	cli ; clear Interrupts
 	mov ax, 0x7c0
 	mov ds, ax
@@ -16,7 +17,14 @@ step2 :
 	mov ss, ax
 	mov sp, 0x7c00
 	sti ; enable Interrupts
-    jmp init
+    
+	 ; Initialize mouse
+    mov ax, 0      ; Reset mouse
+    int 0x33
+    mov ax, 0x0C00 ; Enable mouse
+    int 0x33
+
+	jmp init
 
 print :
 	mov bx, 0
@@ -41,48 +49,44 @@ init :
 	jmp $
 
 screen :
-    ;set video mode
-    mov ah, 00h
-    mov al, 13h
-    int 10h
-    ; draw pixels
-    ; color
-    mov al, 101010b
-    ; dx = pos.y ; cx = pos.x
+    ; Initialize graphics mode
+    mov ax, 0x0013 ; Set VGA 320x200 256-color mode
+    int 0x10
 
-    mov cx, 200    ; Initialize loop counter to 100
+    ; Main loop
+main_loop:
+    ; Get mouse status
+    mov ax, 0x03   ; Get mouse position and button status
+    int 0x33
+    cmp bx, 1      ; Check if left mouse button is pressed
+    jne main_loop  ; If not pressed, continue the loop
 
-    jmp .loop1
+    ; Calculate pixel position
+    mov cx, dx     ; Mouse x-coordinate
+    mov dx, bx     ; Mouse y-coordinate
+    mov ax, 320    ; Screen width
+    mul dx         ; Calculate offset for y-coordinate
+    add ax, cx     ; Add x-coordinate
+    mov di, ax     ; Store the offset in di
+    
+    ; Draw pixel
+    mov ax, 0x0C00 ; Set pixel color to 0 (black)
+    stosb          ; Store the byte (color) at [es:di]
 
-.loop1
+    ; Wait for the button release to avoid drawing multiple pixels at once
+wait_release:
+    mov ax, 0x03   ; Get mouse status
+    int 0x33
+    cmp bx, 0      ; Check if left mouse button is released
+    jne wait_release ; If not released, continue waiting
 
-    mov dx, 20
-    ; mov cx, 30
-    call drawPixel
-    mov dx, 21
-    ; mov cx, 30
-    call drawPixel
-    mov dx, 23
-    ; mov cx, 30
-    call drawPixel
-    mov dx, 24
-    ; mov cx, 30
-    call drawPixel
-    mov dx, 25
-    ; mov cx, 30
-    call drawPixel
+    jmp main_loop  ; Continue the main loop
 
-    dec cx    ; Decrement loop counter
-    cmp cx, 0
-    je .loop1 ; Jump to loop_start if counter is not zero
-
-    jmp $
-
-drawPixel: 
-    ;write pixels on screen
-    mov ah, 0ch
-    mov bh, 0
-    int 10h
+    ; Restore text mode and terminate program
+    mov ax, 0x0003 ; Set text mode (80x25)
+    int 0x10       ; BIOS video services
+    mov ax, 0x4C00 ; Terminate program
+    int 0x21       ; DOS interrupt
 message: db '/Manuel/Westermeier/OS/V1.0/', 0
 times 510-($ - $$) db 0
 dw 0xAA55
